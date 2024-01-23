@@ -8,44 +8,53 @@
 import SwiftUI
 
 struct ContentView: View {
-    let moves = ["diamond.fill", "newspaper", "scissors"]
+    let moves = ["🪨", "🧻", "✂️"]
+    let winnermoves = ["🧻", "✂️", "🪨"]
     let alternatives = ["Win", "Lose"]
-    
+ 
     var randomElement: Int {
         Int.random(in: 0...2)
     }
+    
+    @State private var score = 0
+    @State private var selectedChoice: Int = 1
+    @State private var winLose: Bool = true
     
     var body: some View {
         VStack(spacing: 30) {
             Spacer()
             
             Text(alternatives.randomElement() ?? "")
-                .font(.largeTitle).bold()
+                .font(.system(size: 50)).bold()
                 .foregroundStyle(.indigo)
-            Image(systemName: moves[randomElement])
-                .resizable()
-                .frame(width: 110, height: 100)
-                .foregroundStyle(.indigo)
-            
+            Text(moves[randomElement])
+                .font(.system(size: 150))
+                      
             Spacer()
             
             HStack(spacing: 50) {
                 ForEach(moves, id: \.self) { number in
-                    Button {} label: {
-                        Image(systemName: number)
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundStyle(.white)
+                    Button {calculateScore(number)} label: {
+                        Text(number)
+                            .font(.system(size: 50))
                     }
                     .padding()
                     .background(.indigo)
                     .clipShape(.circle)
-                  
                 }
             }
             
             Spacer()
+            
+            Text("Score: \(score)")
+                .font(.title)
+            
+            Spacer()
         }
+    }
+    
+    func calculateScore(_ number: String) {
+        
     }
 }
 

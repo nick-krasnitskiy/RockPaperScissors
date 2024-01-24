@@ -8,34 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    let moves = ["🪨", "🧻", "✂️"]
-    let winnermoves = ["🧻", "✂️", "🪨"]
-    let alternatives = ["Win", "Lose"]
- 
-    var randomElement: Int {
-        Int.random(in: 0...2)
-    }
+    let moves = ["🪨", "✂️", "🧻"]
     
+    @State private var randomElement = Int.random(in: 0...2)
+    @State private var winLose = Bool.random()
     @State private var score = 0
-    @State private var selectedChoice: Int = 1
-    @State private var winLose: Bool = true
     
     var body: some View {
         VStack(spacing: 30) {
             Spacer()
             
-            Text(alternatives.randomElement() ?? "")
+            Text(winLose ? "Win" : "Lose")
                 .font(.system(size: 50)).bold()
                 .foregroundStyle(.indigo)
+            
             Text(moves[randomElement])
                 .font(.system(size: 150))
-                      
+            
             Spacer()
             
             HStack(spacing: 50) {
-                ForEach(moves, id: \.self) { number in
-                    Button {calculateScore(number)} label: {
-                        Text(number)
+                ForEach(moves.indices, id: \.self) { number in
+                    Button {buttonTapped(number)} label: {
+                        Text(moves[number])
                             .font(.system(size: 50))
                     }
                     .padding()
@@ -50,11 +45,30 @@ struct ContentView: View {
                 .font(.title)
             
             Spacer()
+            
         }
     }
     
-    func calculateScore(_ number: String) {
+    func buttonTapped(_ number: Int) {
+        let tupleIndexes = (randomElement, number)
+        randomElement = Int.random(in: 0...2)
+        winLose = Bool.random()
         
+        if winLose {
+            switch tupleIndexes {
+            case (0, 2), (1, 0), (2, 1):
+                score += 1
+            default:
+                score -= 1
+            }
+        } else {
+            switch tupleIndexes {
+            case (0, 1), (1, 2), (2, 0):
+                score += 1
+            default:
+                score -= 1
+            }
+        }
     }
 }
 

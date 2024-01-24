@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     let moves = ["🪨", "✂️", "🧻"]
-    
+
     @State private var randomElement = Int.random(in: 0...2)
     @State private var winLose = Bool.random()
     @State private var score = 0
+    @State private var isShowingAlert = false
+    @State private var numberOfQuestions: Int = 0
     
     var body: some View {
         VStack(spacing: 30) {
@@ -47,12 +49,25 @@ struct ContentView: View {
             Spacer()
             
         }
+        .alert("Game over!", isPresented: $isShowingAlert) {
+            Button("Reset", action: reset)
+        } message: {
+            Text("Your score: \(score)")
+        }
+    }
+    
+    func reset() {
+        randomElement = Int.random(in: 0...2)
+        winLose = Bool.random()
+        numberOfQuestions = 0
+        score = 0
     }
     
     func buttonTapped(_ number: Int) {
         let tupleIndexes = (randomElement, number)
         randomElement = Int.random(in: 0...2)
         winLose = Bool.random()
+        numberOfQuestions += 1
         
         if winLose {
             switch tupleIndexes {
@@ -68,6 +83,10 @@ struct ContentView: View {
             default:
                 score -= 1
             }
+        }
+        
+        if numberOfQuestions == 10 {
+            isShowingAlert = true
         }
     }
 }

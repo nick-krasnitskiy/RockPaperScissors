@@ -21,11 +21,10 @@ struct ContentView: View {
             Spacer()
             
             Text(winLose ? "Win" : "Lose")
-                .font(.system(size: 50)).bold()
-                .foregroundStyle(.indigo)
+                .setTitleFont()
             
             Text(moves[randomElement])
-                .font(.system(size: 150))
+                .setCentralElement()
             
             Spacer()
             
@@ -35,9 +34,7 @@ struct ContentView: View {
                         Text(moves[number])
                             .font(.system(size: 50))
                     }
-                    .padding()
-                    .background(.indigo)
-                    .clipShape(.circle)
+                    .setChoiceButton()
                 }
             }
             
@@ -88,6 +85,44 @@ struct ContentView: View {
         if numberOfQuestions == 10 {
             isShowingAlert = true
         }
+    }
+}
+
+struct Title: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 50)).bold()
+            .foregroundStyle(.indigo)
+    }
+}
+
+struct CentralElement: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 150))
+    }
+}
+
+struct ChoiceButton: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(.indigo)
+            .clipShape(.circle)
+    }
+}
+
+extension View {
+    func setTitleFont() -> some View {
+        modifier(Title())
+    }
+    
+    func setCentralElement() -> some View {
+        modifier(CentralElement())
+    }
+    
+    func setChoiceButton() -> some View {
+        modifier(ChoiceButton())
     }
 }
 

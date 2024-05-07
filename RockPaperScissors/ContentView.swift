@@ -37,40 +37,22 @@ struct ContentView: View {
                         Button {
                             // rock
                         } label: {
-                            Image(systemName: "mountain.2")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .padding()
-                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
-                                .foregroundStyle(.white)
-                                .background(.indigo)
-                                .clipShape(.circle)
+                            ImageButton(name: "scissors")
+                                .setButtonStyle()
                         }
                         
                         Button {
                             // paper
                         } label: {
-                            Image(systemName: "newspaper")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .padding()
-                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
-                                .foregroundStyle(.white)
-                                .background(.indigo)
-                                .clipShape(.circle)
+                            ImageButton(name: "newspaper")
+                                .setButtonStyle()
                         }
                         
                         Button {
                             // scissors
                         } label: {
-                            Image(systemName: "scissors")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .padding()
-                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
-                                .foregroundStyle(.white)
-                                .background(.indigo)
-                                .clipShape(.circle)
+                            ImageButton(name: "scissors")
+                                .setButtonStyle()
                         }
                     }
                     .padding()
@@ -81,6 +63,33 @@ struct ContentView: View {
             }
             .navigationTitle("Rock - Paper - Scissors")
         }
+    }
+}
+
+struct ImageButton: View {
+    var name: String
+    
+    var body: some View {
+        Image(systemName: name)
+            .resizable()
+    }
+}
+
+struct ButtonStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .aspectRatio(contentMode: .fit)
+            .padding()
+            .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
+            .foregroundStyle(.white)
+            .background(.indigo)
+            .clipShape(.circle)
+    }
+}
+
+extension View {
+    func setButtonStyle() -> some View {
+        modifier(ButtonStyle())
     }
 }
 

@@ -15,6 +15,8 @@ struct ContentView: View {
     @State private var alternative = Int.random(in: 0...1)
     @State private var currentChoice = 0
     @State private var score = 0
+    @State private var questionCount = 0
+    @State private var showingAlert = false
     
     var body: some View {
         NavigationStack {
@@ -73,11 +75,17 @@ struct ContentView: View {
                 .background(.thinMaterial)
                 .padding(50)
             }
+            .alert("The End", isPresented: $showingAlert) {
+                Button("Reset", action: reset)
+            } message: {
+                Text("Your final score: \(score)")
+            }
             .navigationTitle("Rock - Paper - Scissors")
         }
     }
     
     func checkPlayerTap(_ choice: Int, _ randomItem: Int, _ alternative: Int) {
+        questionCount += 1
         if (randomItem == 0 && choice == 1) || (randomItem == 1 && choice == 2) || (randomItem == 2 && choice == 0) {
             if alternative == 0 {
                 score += 1
@@ -96,6 +104,18 @@ struct ContentView: View {
     }
     
     func refresh() {
+        if questionCount < 10 {
+            randomItem = Int.random(in: 0...2)
+            alternative = Int.random(in: 0...1)
+        } else {
+            showingAlert = true
+        }
+    
+    }
+    
+    func reset() {
+        score = 0
+        questionCount = 0
         randomItem = Int.random(in: 0...2)
         alternative = Int.random(in: 0...1)
     }

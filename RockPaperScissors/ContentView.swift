@@ -13,6 +13,8 @@ struct ContentView: View {
     
     @State private var randomItem = Int.random(in: 0...2)
     @State private var alternative = Int.random(in: 0...1)
+    @State private var currentChoice = 0
+    @State private var score = 0
     
     var body: some View {
         NavigationStack {
@@ -35,27 +37,37 @@ struct ContentView: View {
                     Spacer()
                     HStack(spacing: 20) {
                         Button {
-                            // rock
+                            currentChoice = 0
+                            checkPlayerTap(currentChoice, randomItem, alternative)
+                            refresh()
                         } label: {
-                            ImageButton(name: "scissors")
+                            ImageButton(name: "mountain.2")
                                 .setButtonStyle()
                         }
                         
                         Button {
-                            // paper
+                            currentChoice = 1
+                            checkPlayerTap(currentChoice, randomItem, alternative)
+                            refresh()
                         } label: {
                             ImageButton(name: "newspaper")
                                 .setButtonStyle()
                         }
                         
                         Button {
-                            // scissors
+                            currentChoice = 2
+                            checkPlayerTap(currentChoice, randomItem, alternative)
+                            refresh()
                         } label: {
                             ImageButton(name: "scissors")
                                 .setButtonStyle()
                         }
                     }
                     .padding()
+                    
+                    Spacer()
+                    Text("Score: \(score)")
+                        .font(.title2.bold())
                     Spacer()
                 }
                 .background(.thinMaterial)
@@ -64,6 +76,30 @@ struct ContentView: View {
             .navigationTitle("Rock - Paper - Scissors")
         }
     }
+    
+    func checkPlayerTap(_ choice: Int, _ randomItem: Int, _ alternative: Int) {
+        if (randomItem == 0 && choice == 1) || (randomItem == 1 && choice == 2) || (randomItem == 2 && choice == 0) {
+            if alternative == 0 {
+                score += 1
+            } else {
+                score -= 1
+            }
+        } else if choice == randomItem {
+            score -= 1
+        } else {
+            if alternative == 0 {
+                score -= 1
+            } else {
+                score += 1
+            }
+        }
+    }
+    
+    func refresh() {
+        randomItem = Int.random(in: 0...2)
+        alternative = Int.random(in: 0...1)
+    }
+    
 }
 
 struct ImageButton: View {

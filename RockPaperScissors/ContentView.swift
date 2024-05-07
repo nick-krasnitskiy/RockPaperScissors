@@ -20,6 +20,25 @@ struct ContentView: View {
                 .imageScale(.large)
             Text(alternatives[alternative])
                 .font(.largeTitle)
+            HStack(spacing: 50) {
+                Button {
+                    // rock
+                } label: {
+                    Image(systemName: "mountain.2")
+                }
+                
+                Button {
+                    // paper
+                } label: {
+                    Image(systemName: "newspaper")
+                }
+                
+                Button {
+                    // scissors
+                } label: {
+                    Image(systemName: "scissors")
+                }
+            }
         }
     }
 }

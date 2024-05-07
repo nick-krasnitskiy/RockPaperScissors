@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    let items = ["mountain.2", "newspaper", "scissors"]
+    @State private var randomItem = Int.random(in: 0...2)
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        Image(systemName: items[randomItem])
+            .imageScale(.large)
     }
 }
 

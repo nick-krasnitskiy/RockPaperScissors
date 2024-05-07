@@ -9,11 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     let items = ["mountain.2", "newspaper", "scissors"]
+    let alternatives = ["Win", "Lose"]
+    
     @State private var randomItem = Int.random(in: 0...2)
+    @State private var alternative = Int.random(in: 0...1)
     
     var body: some View {
-        Image(systemName: items[randomItem])
-            .imageScale(.large)
+        VStack(spacing: 30) {
+            Image(systemName: items[randomItem])
+                .imageScale(.large)
+            Text(alternatives[alternative])
+                .font(.largeTitle)
+        }
     }
 }
 
